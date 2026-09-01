@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@mock?TNS_ADMIN=${WALLET_PATH}
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: ${APP_USER}
+    password: ${APP_PASSWORD}          
+  liquibase:
+    enabled: true
+    user: ${DEPLOY_USER}
+    password: ${DEPLOY_PASSWORD}
