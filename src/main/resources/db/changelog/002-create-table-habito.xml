@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="002-create-table-habito" author="luisz2310">
+        <createTable tableName="habito">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nombre" type="VARCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descripcion" type="VARCHAR(255)"/>
+
+            <!-- Duración del hábito, en minutos -->
+            <column name="duracion" type="INT"/>
+
+            <!-- Recordatorio -->
+            <column name="recordatorio_hora" type="TIME"/>
+            <!-- Días de la semana, ej: "L,M,X,J,V" o "1,2,3,4,5" -->
+            <column name="recordatorio_dias" type="VARCHAR(30)"/>
+
+            <column name="tipo_alarma" type="VARCHAR(50)"/>
+
+            <!-- Relación con grupo -->
+            <column name="grupo_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+
+            <!-- Sugeridas: dueño del hábito, si la app maneja usuarios -->
+            <column name="usuario_id" type="BIGINT"/>
+
+            <!-- Sugeridas: vigencia del hábito -->
+            <column name="fecha_inicio" type="DATE"/>
+            <column name="fecha_fin" type="DATE"/>
+
+            <column name="activo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha_creacion" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fecha_actualizacion" type="TIMESTAMP"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="habito"
+            baseColumnNames="grupo_id"
+            constraintName="fk_habito_grupo"
+            referencedTableName="grupo"
+            referencedColumnNames="id"
+            onDelete="SET NULL"/>
+
+        <createIndex indexName="idx_habito_grupo_id" tableName="habito">
+            <column name="grupo_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_habito_usuario_id" tableName="habito">
+            <column name="usuario_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: "jdbc:oracle:thin:@tcps://adb.us-phoenix-1.oraclecloud.com:1522/g40944cb79da845_proyectossamanthadbdev_tp.adb.oraclecloud.com?ssl_server_dn_match=true&retry_count=20&retry_delay=3"
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: ${APP_USER}
+    password: ${APP_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+        default_schema: ${DEPLOY_USER}
+  liquibase:
+    enabled: true
+    user: ${DEPLOY_USER}
+    password: ${DEPLOY_PASSWORD}
